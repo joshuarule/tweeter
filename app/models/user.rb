@@ -17,16 +17,14 @@ class User < ActiveRecord::Base
   has_many :followers, through: :reverse_relationships, source: :follower                                    
 
   def following?(other_user)
-    self.relationship.find_by(followed_id: other_user.id)
+    self.relationships.find_by(followed_id: other_user.id)
   end
 
-  def following!(other_user)
-    self.relationship.create!(followed_id: other_user.id)
+  def follow!(other_user)
+    self.relationships.create!(followed_id: other_user.id)
   end
 
   def unfollow!(other_user)
-    self.relationship.find_by(followed_id: other_user.id).destroy
+    self.relationships.find_by(followed_id: other_user.id).destroy
   end
-
-
 end
