@@ -1,0 +1,23 @@
+<header>
+  <% if user_signed_in? %>
+    <%= link_to "+", new_post_path, :class => "btn pull-right" %>
+  <% end %>
+  <h1 class="underline">Recent Tweets</h1>
+
+  
+</header>
+
+
+<ul>
+  <% @posts.each do |post| %>
+    <li>
+      <!-- <span><%= post.id %></span> -->
+      <p><%= post.content %></p>
+      <%= link_to "@#{post.user.handle}", user_path(post.user_id), :class => "block" rescue nil %>
+      <%= link_to "Edit", edit_post_path(post), :class => "btn btn-primary" if post.user.id == current_user.id  rescue nil %>
+      <%= link_to "Remove", post, method: 'delete', :class => "btn btn-delete" if post.user.id == current_user.id rescue nil %>
+      
+    </li>
+  <% end %>
+</ul>
+
